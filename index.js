@@ -56,8 +56,8 @@ app.get("/api/avatar/:id", (req, res) => {
 });
 
 if (process.env.NODE_ENV === "development") {
-  app.use(errorhandler());
   app.use("/debug", require("./routes/debug"));
+  app.use(errorhandler());
 } else {
   app.use((err, req, res, next) => {
     // todo: record error in log
@@ -66,7 +66,7 @@ if (process.env.NODE_ENV === "development") {
   });
 }
 
-const server = app.listen(3001);
+const server = app.listen(process.env.PORT || 3001);
 
 const io = new SocketServer({
   cors: {
