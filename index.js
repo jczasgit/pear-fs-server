@@ -13,6 +13,13 @@ const { customAlphabet } = require("nanoid");
 const Room = require("./utils/room");
 const Peer = require("./utils/peer");
 
+const corsOpts = {
+  methods: ["GET", "POST"],
+  origin:
+    process.env.NODE_ENV === "development"
+      ? "*"
+      : ["http://localhost:3000", /\.juancwu\.com$/, /pear-fs\.herokuapp\.com/],
+};
 const avatarJSON = JSON.parse(fs.readFileSync("./avatar.json"));
 globalThis.socketToRoomId = new Map(); // <socketId, roomId>
 globalThis.currentRooms = new Map(); // <roomId, Room>
@@ -22,19 +29,7 @@ const nanoid = customAlphabet(
   8
 );
 
-app.use(
-  cors({
-    methods: ["GET", "POST"],
-    origin:
-      process.env.NODE_ENV === "development"
-        ? "*"
-        : [
-            "http://localhost:3000",
-            /\.juancwu\.com$/,
-            /pear-fs\.herokuapp\.com/,
-          ],
-  })
-);
+app.use(cors(corsOpts));
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -76,14 +71,7 @@ if (process.env.NODE_ENV === "development") {
 const server = app.listen(process.env.PORT || 3001);
 
 const io = new SocketServer({
-  cors: {
-    methods: ["GET", "POST"],
-    origin: [
-      "http://localhost:3000",
-      /\.juancwu\.com$/,
-      /pear-fs\.herokuapp\.com/,
-    ],
-  },
+  cors: corsOpts,
 });
 
 io.attach(server);
