@@ -28,7 +28,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       /\.juancwu\.com$/,
-      "https://pear-fs.herokuapp.com/",
+      /pear-fs\.herokuapp\.com/,
     ],
   })
 );
