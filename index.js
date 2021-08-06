@@ -25,7 +25,11 @@ const nanoid = customAlphabet(
 app.use(
   cors({
     methods: ["GET", "POST"],
-    origin: ["http://localhost:3000", /\.juancwu\.com$/],
+    origin: [
+      "http://localhost:3000",
+      /\.juancwu\.com$/,
+      "https://pear-fs.herokuapp.com/",
+    ],
   })
 );
 
