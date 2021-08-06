@@ -75,7 +75,11 @@ const server = app.listen(process.env.PORT || 3001);
 const io = new SocketServer({
   cors: {
     methods: ["GET", "POST"],
-    origin: ["http://localhost:3000", /\.juancwu\.com$/],
+    origin: [
+      "http://localhost:3000",
+      /\.juancwu\.com$/,
+      /pear-fs\.herokuapp\.com/,
+    ],
   },
 });
 
